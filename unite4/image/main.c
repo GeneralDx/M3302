@@ -18,11 +18,31 @@ void ImageUnie(unsigned char * image, int largeur, int hauteur, unsigned char co
   }
 }
 
+void Negatif(unsigned char* image, int largeur, int hauteur){
+  for(int i = 0; i< largeur*hauteur; i++){
+    char change = (image[i]-128) *2;
+    image[i] -= change;
+  }
+}
+
+void Seuillage(unsigned char * image, int largeur, int hauteur,unsigned char seuil){
+  for(int i=0; i< largeur*hauteur; i++)
+    image[i]=(image[i]<seuil)?0:255;
+}
+
 int main(int argc, char const *argv[]) {
-  unsigned char * img = CreerImage(30, 40);
-  ImageUnie(img, 30, 40, 42);
-  EcrireImagePGM("imageunie.pgm", img, 30, 40);
-  AfficherImage("imageunie.png");
+  int l, h;
+  unsigned char * img = LireImagePGM("guadalest.pgm",&l ,&h); 
+  if (img == NULL)
+    return -1;
+  Negatif(img, l, h);
+  EcrireImagePGM("neg.pgm", img, l, h);
+  free(img);
+  img = LireImagePGM("guadalest.pgm",&l, &h);
+  if(img == NULL)
+    return -2;
+  Seuillage(img,l,h,128);
+  EcrireImagePGM("seuil.pgm", img,l,h);
 
   free(img);
   return 0;
