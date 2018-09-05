@@ -30,20 +30,22 @@ void Seuillage(unsigned char * image, int largeur, int hauteur,unsigned char seu
     image[i]=(image[i]<seuil)?0:255;
 }
 
+
+void Degrade(unsigned char * image, int largeur, int hauteur){
+  int x;
+  for (int i = 0; i < largeur * hauteur; i++) {
+    x = i % largeur;
+    image[i] = (unsigned char)((256.0/(double)largeur) *(double)x);
+  }
+}
+
 int main(int argc, char const *argv[]) {
-  int l, h;
-  unsigned char * img = LireImagePGM("guadalest.pgm",&l ,&h); 
+  int l= 600, h=100;
+  unsigned char * img = CreerImage(l, h);
   if (img == NULL)
     return -1;
-  Negatif(img, l, h);
-  EcrireImagePGM("neg.pgm", img, l, h);
-  free(img);
-  img = LireImagePGM("guadalest.pgm",&l, &h);
-  if(img == NULL)
-    return -2;
-  Seuillage(img,l,h,128);
-  EcrireImagePGM("seuil.pgm", img,l,h);
-
+  Degrade(img, l, h);
+  EcrireImagePGM("degrade.pgm", img, l, h);
   free(img);
   return 0;
 }
