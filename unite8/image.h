@@ -9,4 +9,5 @@ typedef struct Image
 
 t_image * CreerImage(unsigned int largeur, unsigned int hauteur);
 void LibererImage(t_image* img);
+int* Histogramme(t_image* image);
 #endif

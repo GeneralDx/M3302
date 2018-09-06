@@ -8,15 +8,20 @@
 int main(int argc, char const *argv[]) {
 
 
-  t_image * img = LireImagePGM("voiron.pgm");
+  // t_image * img = LireImagePGM("voiron.pgm");
+  t_image * img = CreerImage(1,2);
   if (img == NULL)
     return -1;
 
-  t_image * rot = Rotation(img);
-  EcrireImagePGM("voironneg.pgm", *rot);
+  ImageUnie(img, 128);
+  int* hist = Histogramme(img);
+  for (size_t i = 0; i < 256; i++) {
+    if (hist[i]>0) {
+      printf("i = %ld, hist[i] = %d\n", i, hist[i]);
+    }
+  }
+  EcrireImagePGM("voironneg.pgm", *img);
   LibererImage(img);
-  LibererImage(rot);
-
   return 0;
 
 }
