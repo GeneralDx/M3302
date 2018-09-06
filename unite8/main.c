@@ -12,11 +12,10 @@ int main(int argc, char const *argv[]) {
   if (img == NULL)
     return -1;
 
-  Miroir(img, 1);
-  Negatif(img);
-  Seuillage(img, 128);
-  EcrireImagePGM("voironneg.pgm", *img);
+  t_image * rot = Rotation(img);
+  EcrireImagePGM("voironneg.pgm", *rot);
   LibererImage(img);
+  LibererImage(rot);
 
   return 0;
 

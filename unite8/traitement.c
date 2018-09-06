@@ -64,3 +64,13 @@ void Miroir(t_image * image, int type){
   }
   free(buffer.pixels);
 }
+
+t_image* Rotation(t_image* image){
+  t_image * ret = CreerImage(image->hauteur, image->largeur);
+  for (size_t x = 0; x < image->largeur; x++) {
+    for (size_t y = 0; y < image->hauteur; y++) {
+      ret->pixels[x*ret->largeur +y] = image->pixels[y*image->largeur +x];
+    }
+  }
+  return ret;
+}
