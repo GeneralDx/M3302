@@ -74,3 +74,20 @@ t_image* Rotation(t_image* image){
   }
   return ret;
 }
+
+t_image* HistogrammeImage(int* histo, int hauteur){
+  int max =0;
+  for (size_t i = 0; i < 256; i++) {
+    if (histo[i] > max) {
+      max = histo[i];
+    }
+  }
+  t_image* ret = CreerImage(256, hauteur);
+
+  for (size_t x = 0; x < 256; x++) {
+    for (int y = 0; y < hauteur; y++) {
+      ret->pixels[y*256 + x] =( hauteur - (((double)histo[x] / (double)max)*hauteur) > y )? 0 : 255;
+    }
+  }
+  return ret;
+}
